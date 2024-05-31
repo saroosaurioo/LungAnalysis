@@ -25,6 +25,7 @@ oauthlib==3.2.2
 opencv-python==4.9.0.80
 opt-einsum==3.3.0
 patsy==0.5.3
+pillow==10.0.1
 ply==3.11
 protobuf==3.19.6
 pyasn1==0.5.1
