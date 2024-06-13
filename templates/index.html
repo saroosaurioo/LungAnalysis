@@ -41,8 +41,9 @@
                             file:text-sm file:font-semibold
                             file:bg-violet-50 file:text-violet-700
                             hover:file:bg-violet-100
-                            cursor-pointer" id="file_upload" type="file" name="file">
+                            cursor-pointer" id="file_upload" onchange="previewImage(event, '#imgPreview')" type="file" name="file">
                     </div>
+                    <img id="imgPreview">
                     <button type="submit" class="mt-8 w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                         Analizar imagen
                     </button>
@@ -55,6 +56,30 @@
         document.getElementById('uploadForm').onsubmit = function() {
             document.getElementById('loader').style.display = 'block';
         };
+    </script>
+    <script>
+        function previewImage(event, querySelector){
+
+            //Recuperamos el input que desencadeno la acción
+            const input = event.target;
+            
+            //Recuperamos la etiqueta img donde cargaremos la imagen
+            $imgPreview = document.querySelector(querySelector);
+        
+            // Verificamos si existe una imagen seleccionada
+            if(!input.files.length) return
+            
+            //Recuperamos el archivo subido
+            file = input.files[0];
+        
+            //Creamos la url
+            objectURL = URL.createObjectURL(file);
+            
+            //Modificamos el atributo src de la etiqueta img
+            $imgPreview.src = objectURL;
+            $imgPreview.className = "mt-4 w-64 h-64 object-cover mx-auto rounded"
+                        
+        }
     </script>
 </body>
 </html>

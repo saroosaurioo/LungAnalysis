@@ -1,5 +1,4 @@
 from threading import Timer
-
 from flask import Flask, request, render_template, redirect, url_for, send_from_directory
 from werkzeug.utils import secure_filename
 from keras.applications.vgg16 import VGG16, preprocess_input
@@ -52,10 +51,15 @@ def upload_file():
             filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             resultado = analyze_image(filepath)
+            if resultado in ["Pneumonia", "Covid-19"]:
+                color = "text-red-500 text-lg font-bold border bg-red-100 p-1 mt-4 rounded"
+            else:
+                color = "text-green-500 text-lg font-bold border bg-green-100 p-1 mt-4 rounded"
             Timer(10, delete_file, args=[filepath]).start()
+            
 
             return render_template('resultado.html', resultado=resultado,
-                                   imagen_url=filepath)
+                                   imagen_url=filepath, color=color)
 
     return render_template('index.html')
 
